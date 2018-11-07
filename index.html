@@ -1,0 +1,51 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+  <script src='dist/onfido.min.js'></script>
+  <link rel='stylesheet' href='dist/style.css'>
+  <script>
+
+
+function getToken() {
+    const first_name = document.getElementById("first_name").value;
+    const last_name = document.getElementById("last_name").value;
+// call api
+    const url = 'http://localhost:9000/api/v1/kyc/applicant/';
+    const data = {first_name, last_name};
+    let token = "";
+    fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers:{'Content-Type': 'application/json'}
+    })
+    .then(res => res.json())
+    .then(response => {
+        console.log(response);
+        token = response;
+        Onfido.init({
+            token,
+            containerId: 'onfido-mount',
+            onComplete: (data) => {
+                console.log("everything is complete")
+                console.log(data)
+            }
+        })   
+    })
+    .catch(error => console.error('Error:', error));
+ 
+}
+  </script>
+</head>
+
+<body>
+    First name: <input type="text" name="first_name" id="first_name"><br>
+    Last name: <input type="text" name="last_name" id="last_name"><br>
+    <input type="submit" value="Submit" onclick="getToken()">
+    <div id='onfido-mount'></div>
+</body>
+</html>
