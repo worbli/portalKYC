@@ -72,12 +72,19 @@
             containerId: 'onfido-mount',
             language: {
                 locale: 'en',
-                phrases: {welcome: {
+                phrases: {
+                  welcome: {
                     title: 'Upload your documents',
                     description_p_1: "Once you are done here, close this tab & return to your application",
                     description_p_2: "If your first ID doesn't work. Please upload another ID.",
                     next_button: "Select Documents"
-                }},
+                },
+                  complete: {
+                    message: 'Documents submitted',
+                    submessage: 'You can close this tab and return to your application.'
+                  }
+                
+                },
             },
             onComplete: (data) => {
                 console.log("everything is complete")
